@@ -5,6 +5,9 @@ from flask_login import LoginManager
 from dotenv import load_dotenv
 import os
 from models.models import db, User
+from api.user import user
+from api.post import post
+from api.comment import comment
 
 
 # Load .env
@@ -35,6 +38,12 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+#----- Route URL endpoints blueprints registers -----
+app.register_blueprint(user, url_prefix="/user")
+app.register_blueprint(post, url_prefix="/post")
+app.register_blueprint(comment, url_prefix="/comment")
 
 
 #----- Health check route to check your server is up and running -----
